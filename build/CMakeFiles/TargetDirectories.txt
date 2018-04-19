@@ -1,0 +1,8 @@
+/Users/jorgepaulordonezandrade/Documents/GitHub/FEMCourse/build/CMakeFiles/ALL_BUILD.dir
+/Users/jorgepaulordonezandrade/Documents/GitHub/FEMCourse/build/CMakeFiles/ZERO_CHECK.dir
+/Users/jorgepaulordonezandrade/Documents/GitHub/FEMCourse/build/mainprograms/CMakeFiles/Fem2018.dir
+/Users/jorgepaulordonezandrade/Documents/GitHub/FEMCourse/build/mainprograms/CMakeFiles/FemSC.dir
+/Users/jorgepaulordonezandrade/Documents/GitHub/FEMCourse/build/mainprograms/CMakeFiles/TestTwoDProblem.dir
+/Users/jorgepaulordonezandrade/Documents/GitHub/FEMCourse/build/mainprograms/CMakeFiles/TestOneDProblem.dir
+/Users/jorgepaulordonezandrade/Documents/GitHub/FEMCourse/build/mainprograms/CMakeFiles/TestMatrix.dir
+/Users/jorgepaulordonezandrade/Documents/GitHub/FEMCourse/build/mainprograms/CMakeFiles/TestIntegrate.dir

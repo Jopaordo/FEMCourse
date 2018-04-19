@@ -19,7 +19,22 @@ using std::cin;
 
 int main ()
 {
-    VecDouble vec1;
-  
+    IntRule1d jorge(2);
+    jorge.Print(cout);
+    
+    int p;
+    VecDouble co(3);
+    double weight;
+    co[0]=0;
+    
+    double S=0;
+    for(int i=0;i<=jorge.NPoints()-1;i++){
+        jorge.Point(i, co,weight);
+        S = S + weight * co[0] * co[0];
+    }
+    std::cout<<"Integral: "<<S<<"\n";
+
+    
     return 0;
 }
+
