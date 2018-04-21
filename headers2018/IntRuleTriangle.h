@@ -18,10 +18,11 @@ class IntRuleTriangle : public IntRule
   
 public:
   
-  IntRuleTriangle();
+    IntRuleTriangle();
+ 
   
   IntRuleTriangle(int order);
-  
+ 
   virtual void SetOrder(int order);
   
 };

@@ -34,8 +34,9 @@ void IntRuleQuad::SetOrder(int order){
     }
     fPoints.Resize(npoints, 1);
     fWeights.resize(npoints);
+    
+    
     int p=order;
-
     if(p<0||p>=NPoints()){
         DebugStop();
     }

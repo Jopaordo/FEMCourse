@@ -3,7 +3,8 @@
 //  FemSC
 //
 //  Created by Philippe Devloo on 03/04/18.
-//
+
+#include "DataTypes.h"
 
 #ifndef Shape1d_h
 #define Shape1d_h
