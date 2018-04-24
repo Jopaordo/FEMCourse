@@ -13,7 +13,7 @@
 class TopologyQuad
 {
 protected:
-    
+
     typedef IntRuleQuad LocIntRule;
     
     const int nSides = 9;

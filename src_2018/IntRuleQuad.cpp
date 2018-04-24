@@ -20,7 +20,9 @@ IntRuleQuad::IntRuleQuad(int order){
     SetOrder(fOrder);
 }
 void IntRuleQuad::SetOrder(int order){
+    
     //Calculate required points number to integrate a fOrder order polynomial
+    
     int npoints=0,resto=0;
     resto=fOrder%2;
     

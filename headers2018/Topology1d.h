@@ -14,7 +14,6 @@
 class Topology1d
 {
 protected:
-    
     typedef IntRule1d LocIntRule;
 
     const int nSides = 3;
