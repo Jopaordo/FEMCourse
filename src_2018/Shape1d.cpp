@@ -1,65 +1,81 @@
-//
+    //
 //  Geom1d.h
 //  FemSC
 //
 //  Created by Philippe Devloo on 03/04/18.
-//
 
 #include "Shape1d.h"
-#include "DataTypes.h"
+#include "tpanic.h"
 
+/// computes the shape functions in function of the coordinate in parameter space and orders of the shape functions (size of orders is number of sides of the element topology)
 
-    /// computes the shape functions in function of the coordinate in parameter space and orders of the shape functions (size of orders is number of sides of the element topology)
+void Shape1d::Shape(const VecDouble &xi, VecInt &orders, VecDouble &phi, Matrix &dphi){
 
-void Shape1d::Shape(VecDouble &xi, VecInt &orders, VecDouble &phi, Matrix &dphi){
     
-    int fPorder = NShapeFunctions(orders)-1;
-    phi.resize(fPorder+1);
-    dphi.Resize(1,fPorder+1);
-    for (int i=0; i<fPorder+1; i++) {
+    int nshape = NShapeFunctions(orders);
+    int order = nshape - 1;
+    
+    phi.resize(nshape);
+    dphi.Resize(1, nshape);
+    
+    for (int i=0; i<nshape; i++) {
         phi[i]=1.;
         dphi(0,i)=0;
     }
     
-    for (int i=0; i<fPorder+1; i++) {
-        double epsi=-1.+i*2./fPorder;
+    for (int i=0; i<nshape; i++) {
+        double epsi=-1.+i*2./order;
         
-        for (int j=0; j<fPorder+1; j++) {
+        for (int j=0; j<nshape; j++) {
             
-            TMatrix axdphi(1,fPorder+1);
+            Matrix axdphi(1,nshape);
             if (i!=j) {
-                double epsj=-1.+j*2./fPorder;
+                double epsj=-1.+j*2./order;
                 
                 phi[i]*=(xi[0]-epsj)/(epsi-epsj);
                 
                 axdphi(0,i)=1/(epsi-epsj);
                 
-                for (int k=0; k<fPorder+1; k++) {
+                for (int k=0; k<nshape; k++) {
                     if (k!=i&&k!=j) {
-                        epsj=-1.+k*2./fPorder;
+                        epsj=-1.+k*2./order;
                         axdphi(0,i)*=(xi[0]-epsj)/(epsi-epsj);
                     }
+                    
                 }
+                
                 dphi(0,i)+=axdphi(0,i);
+                
             }
+            
         }
+        
     }
-}
     
-    /// returns the number of shape functions associated with a side
-
- int Shape1d::NShapeFunctions(int side, VecInt &orders){
-     return orders[side];
-}
     
-    /// returns the total number of shape functions
+}
 
- int Shape1d::NShapeFunctions(VecInt &orders){
-    int order = orders.size();
-     int s=0;
-     for (int i=0; i<order; i++) {
-         s=s+orders[i];
-     }
-     return s;
- }
+/// returns the number of shape functions associated with a side
+int Shape1d::NShapeFunctions(int side, VecInt &orders){
+ 
+    if (side<=1) {
+        //En los nodos del elemento tiene asociada una sola funcion
+        return 1;
+    }else{
+        
+        //En el elemento lineal tiene asociadas varias funciones;
+        return orders[side];
+    }
+    
+}
 
+/// returns the total number of shape functions
+int Shape1d::NShapeFunctions(VecInt &orders){
+    int nSides = orders.size();
+    int nshape=0;
+    for(int i=0;i<=nSides-1;i++){
+    //    nshape = nshape + NShapeFunctions(i,orders);
+        nshape = nshape + orders[i];
+    }
+    return nshape;
+}

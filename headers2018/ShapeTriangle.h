@@ -8,16 +8,19 @@
 #ifndef ShapeTriangle_h
 #define ShapeTriangle_h
 
-class ShapeTriangle
+#include "DataTypes.h"
+#include "TopologyTriangle.h"
+
+class ShapeTriangle : public TopologyTriangle
 {
 public:
-    /// computes the shape functions in function of the coordinate in parameter space and orders of the shape functions (size of orders is number of sides of the element topology)
-    static void Shape(VecDouble &xi, VecInt &orders, VecDouble &phi, Matrix &dphi);
+    // Computes the shape functions in function of the coordinate in parameter space and orders of the shape functions (size of orders is number of sides of the element topology)
+    static void Shape(const VecDouble &xi, VecInt &orders, VecDouble &phi, Matrix &dphi);
     
-    /// returns the number of shape functions associated with a side
+    // Returns the number of shape functions associated with a side
     static int NShapeFunctions(int side, VecInt &orders);
     
-    /// returns the total number of shape functions
+    // Returns the total number of shape functions
     static int NShapeFunctions(VecInt &orders);
     
 };

@@ -7,52 +7,68 @@
 
 
 #include "IntRule.h"
-#include "tpanic.h"
-
-
+#include "IntRule1d.h"
+//INT RULE ES UNA CLASE VIRTUAL
 //Default Constructor of integration rule
 IntRule::IntRule(){
-    fOrder=0;
+    fOrder = 0;
+    SetOrder(fOrder);
 }
 
-
+//Constructor of integration rule
 IntRule::IntRule(int order){
     fOrder=order;
+    SetOrder(fOrder);
 }
-
+//Destructor of integration rule
 IntRule::~IntRule(){
     
 }
 
-void IntRule::operator=(const IntRule &copy){
-    fOrder=copy.fOrder;
-    fPoints=copy.fPoints;
-    fWeights=copy.fWeights;
-}
-
+//Copy constructor of integration rule
 IntRule::IntRule(const IntRule &copy){
+
+    fWeights=copy.fWeights;
+    fPoints = copy.fPoints;
     fOrder=copy.fOrder;
+    SetOrder(fOrder);
+    
+}
+
+
+
+//operator=
+IntRule &IntRule::operator=(const IntRule &copy){
     fPoints=copy.fPoints;
     fWeights=copy.fWeights;
-    
+    fOrder=copy.fOrder;
+    SetOrder(fOrder);
 }
 
 
-
+//Method to return the number of integration points
 int IntRule::NPoints() const{
-    return fWeights.size();
+    //el numero de puntos es calculado por el tamaño del vector
+    int npoints = fWeights.size();
+    return npoints;
 }
 
-void IntRule::Point(int p, VecDouble &co, double &weight) const{
-    
+//Function returning coordinates and weights of integration points
+void IntRule::Point(int p, VecDouble &co, double &weight) const {
+    co.resize(2);
     co[0]=fPoints.GetVal(p, 0);
+    co[1]=fPoints.GetVal(p, 1);
     weight=fWeights[p];
-
+    
 }
 
-void IntRule::Print(std::ostream &out) const{
-    std::cout<<"Polinomial Order: "<<fOrder<<"\n";
-    std::cout<<"Integration Points Number: "<<NPoints()<<"\n";
 
-    
+
+
+
+//Fuction for printing results
+void IntRule::Print(std::ostream &out) const{
+    std::cout<<"Polynomial number : "<<fOrder<<"\n";
+    std::cout<<"Integration points number : "<<NPoints()<<"\n";
+
 }

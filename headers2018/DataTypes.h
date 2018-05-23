@@ -33,3 +33,14 @@ enum ElementType
 };
 
 #endif /* defined(__FemSC__DATATYPES__) */
+
+
+
+//
+//  IntRule.h
+//  FemSC
+//
+//  Created by Philippe Devloo on 7/30/15.
+//
+//
+

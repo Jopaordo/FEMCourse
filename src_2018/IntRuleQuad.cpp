@@ -3,25 +3,25 @@
 //  FemSC
 //
 //  Created by Philippe Devloo on 03/04/18.
-//
 
-
-#include "IntRule.h"
-#include "IntRule1d.h"
 #include "IntRuleQuad.h"
-#include "tpanic.h"
+#include "IntRule1d.h"
+
+//Default Constructor of integration rule
 
 IntRuleQuad::IntRuleQuad(){
     fOrder=0;
     SetOrder(fOrder);
 }
+
 IntRuleQuad::IntRuleQuad(int order){
     fOrder=order;
-    SetOrder(fOrder);
+    SetOrder(order);
 }
+
 void IntRuleQuad::SetOrder(int order){
-    
-    //Calculate required points number to integrate a fOrder order polynomial
+    fOrder =order;
+    //numero de puntos necesarios para integrar con orden fOrder
     
     int npoints=0,resto=0;
     resto=fOrder%2;
@@ -30,31 +30,27 @@ void IntRuleQuad::SetOrder(int order){
     if (resto!=0) {
         npoints=(fOrder+1)/2;
     }
-    //Even order
+    // Even order
     if (resto==0) {
         npoints=(fOrder+2)/2;
     }
-    fPoints.Resize(npoints, 1);
+    
+    npoints = npoints*npoints;
+    
+    fPoints.Resize(npoints,2);
     fWeights.resize(npoints);
     
-    
-    int p=order;
-    if(p<0||p>=NPoints()){
-        DebugStop();
-    }
     
     IntRule1d Int1Dx(fOrder);
     IntRule1d Int1Dy(fOrder);
     
-    fPoints.Resize(npoints, 1);
-    fWeights.resize(npoints);
     
-    VecDouble co(2);
     double weight;
+    VecDouble co(2);
     for (int i=0; i<Int1Dx.NPoints(); i++) {
         
         Int1Dx.Point(i, co, weight);
-       VecDouble coX(1);
+        VecDouble coX(1);
         double weightX;
         coX[0]=co[0];
         weightX=weight;
@@ -65,20 +61,37 @@ void IntRuleQuad::SetOrder(int order){
             
             fPoints(j+i*Int1Dy.NPoints(),0)=co[0];
             fPoints(j+i*Int1Dy.NPoints(),1)=coX[0];
-            
             fWeights[j+i*Int1Dy.NPoints()]=weightX*weight;
         }
         
     }
-
-
-}
-//Calculate integration points and weigths
-
-
-void gaulegQuad(const double x1, const double x2, VecDouble&x, VecDouble &w){
-
-}
     
+    
+}
 
-
+void IntRuleQuad::gaulegQuad(const double x1, const double x2, VecDouble &x, VecDouble &w){
+    
+    IntRule1d IntGauss1Dx(fOrder);
+    IntRule1d IntGauss1Dy(fOrder);
+    double nPoints = x.size();
+    VecDouble weightx(x.size()), coX(nPoints);
+    VecDouble weighty(x.size()), coY(nPoints);
+    
+    IntGauss1Dx.gauleg(x1, x2, coX, weightx);
+    IntGauss1Dy.gauleg(x1, x2, coY, weighty);
+    
+    x.resize(2*nPoints*nPoints);
+    w.resize(nPoints*nPoints);
+    
+    for (int i = 0; i<nPoints; i++) {
+        
+        for (int j = 0; j<nPoints; j++) {
+            w[j+i*nPoints]=weightx[j]*weighty[i];
+            x[j+i*nPoints]=coX[j];
+            x[j+i*nPoints+nPoints*nPoints]=coY[i];
+        }
+    }
+    
+    
+    
+}

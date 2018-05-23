@@ -3,38 +3,34 @@
 //  FemSC
 //
 //  Created by Philippe Devloo on 03/04/18.
-//
 
-#include "IntRule.h"
-#include "IntRule1d.h"
 #include "IntRuleQuad.h"
-#include "tpanic.h"
-#include <stdio.h>
-#include "TVec.h"
-#include "TMatrix.h"
+#include "IntRule1d.h"
 #include "IntRuleTriangle.h"
+
+//Default Constructor of integration rule
 
 
 IntRuleTriangle::IntRuleTriangle(){
     fOrder=0;
     SetOrder(fOrder);
 }
-    
+
 IntRuleTriangle::IntRuleTriangle(int order){
     fOrder=order;
     SetOrder(fOrder);
 }
-    
+
 void IntRuleTriangle::SetOrder(int order){
     fOrder=order;
-    
-    if (fOrder == 0){
+    if (fOrder == 0) {
         
         fPoints.Resize(1, 2);
         fWeights.resize(1);
         
         fPoints(0,0) = 0.33333333333333331;  fPoints(0,1) = 0.33333333333333331;  fWeights[0] = 0.5;
     }
+    
     
     if(fOrder==1||fOrder==2){
         
@@ -45,6 +41,9 @@ void IntRuleTriangle::SetOrder(int order){
         fPoints(1,0) = 0.66666666666666663;  fPoints(1,1) = 0.16666666666666666;  fWeights[1] = 0.16666666666666666;
         fPoints(2,0) = 0.16666666666666666;  fPoints(2,1) = 0.16666666666666666;  fWeights[2] = 0.16666666666666666;
     }
+    
+    
+    
     
     if(fOrder==3){
         
@@ -70,6 +69,7 @@ void IntRuleTriangle::SetOrder(int order){
         fPoints(3,0) = 0.091576213509770743;  fPoints(3,1) =  0.81684757298045851;      fWeights[3] =  0.054975871827660935;
         fPoints(4,0) = 0.81684757298045851;  fPoints(4,1) =  0.091576213509770743;      fWeights[4] =  0.054975871827660935;
         fPoints(5,0) = 0.091576213509770743;  fPoints(5,1) =  0.091576213509770743;      fWeights[5] =  0.054975871827660935;
+        
     }
     
     if (fOrder==5) {
@@ -105,6 +105,7 @@ void IntRuleTriangle::SetOrder(int order){
         fPoints(11,0) = 0.31035245103378439;    fPoints(11,1) = 0.053145049844816945;       fWeights[11] = 0.041425537809186785;
     }
     
+    
     if (fOrder==7) {
         
         fPoints.Resize(15, 2);
@@ -130,6 +131,7 @@ void IntRuleTriangle::SetOrder(int order){
         fPoints(13,0) = 0.76122274802452383;   fPoints(13,1) = 0.04627087779880891;        fWeights[13] = 0.028060072141687677;
         fPoints(14,0) = 0.04627087779880891;    fPoints(14,1) = 0.76122274802452383;       fWeights[14] = 0.028060072141687677;
     }
+    
     
     if (fOrder==8) {
         
@@ -180,6 +182,7 @@ void IntRuleTriangle::SetOrder(int order){
         fPoints(18,0)= 0.22196298916076571;        fPoints(18,1)= 0.74119859878449801;     fWeights[18]= 0.021641769688644688;
     }
     
+    
     if (fOrder==10) {
         
         fPoints.Resize(25, 2);
@@ -211,6 +214,7 @@ void IntRuleTriangle::SetOrder(int order){
         fPoints(23,0)= 0.12280457706855927;     fPoints(23,1)= 0.033371833739304788;    fWeights[23]= 0.013474676295939981;
         fPoints(24,0)= 0.033371833739304788;   fPoints(24,1)= 0.12280457706855927;      fWeights[24]= 0.013474676295939981;
     }
+    
     
     if (fOrder==11) {
         
@@ -246,6 +250,7 @@ void IntRuleTriangle::SetOrder(int order){
         fPoints(26,0)= 0.64047231013486527;    fPoints(26,1)= 0.31178371570959901;      fWeights[26]= 0.02036399822914952;
         fPoints(27,0)= 0.31178371570959901;     fPoints(27,1)= 0.64047231013486527;      fWeights[27]= 0.02036399822914952;
     }
+    
     
     if (fOrder==12) {
         
@@ -286,6 +291,7 @@ void IntRuleTriangle::SetOrder(int order){
         fPoints(31,0)= 0.60894323577978782;    fPoints(31,1)= 0.27571326968551418;      fWeights[31]= 0.020185778883190463;
         fPoints(32,0)= 0.27571326968551418;    fPoints(32,1)= 0.60894323577978782;      fWeights[32]= 0.020185778883190463;
     }
+    
     
     if (fOrder==13) {
         
@@ -330,6 +336,7 @@ void IntRuleTriangle::SetOrder(int order){
         fPoints(35,0)= 0.72235779312418802;    fPoints(35,1)= 0.27251581777342965;     fWeights[35]= 0.0047953405017716316;
         fPoints(36,0)= 0.27251581777342965;    fPoints(36,1)= 0.72235779312418802;     fWeights[36]= 0.0047953405017716316;
     }
+    
     
     if (fOrder==14) {
         
@@ -382,7 +389,9 @@ void IntRuleTriangle::SetOrder(int order){
         fPoints(43,0)= 0.014624304192623826;   fPoints(43,1)= 0.91420998492962546;       fWeights[43]= 0.0034823316867592063;
         fPoints(44,0)= 0.91420998492962546;    fPoints(44,1)= 0.071165710877750768;      fWeights[44]= 0.0034823316867592063;
         fPoints(45,0)= 0.071165710877750768;   fPoints(45,1)= 0.91420998492962546;       fWeights[45]= 0.0034823316867592063;
+        
     }
+    
     
     if (fOrder==15) {
         
@@ -441,7 +450,9 @@ void IntRuleTriangle::SetOrder(int order){
         fPoints(49,0) = 0.010868359489082323;      fPoints(49,1) = 0.91607564403173114;      fWeights[49] =  0.0023071532644835515;
         fPoints(50,0) = 0.91607564403173114;      fPoints(50,1) = 0.073055996479186494;      fWeights[50] =  0.0023071532644835515;
         fPoints(51,0) = 0.073055996479186494;      fPoints(51,1) = 0.91607564403173114;      fWeights[51] =  0.0023071532644835515;
+        
     }
+    
     
     if (fOrder==16) {
         
@@ -504,6 +515,8 @@ void IntRuleTriangle::SetOrder(int order){
         fPoints(53,0)= 0.90639484399204151;    fPoints(53,1)= 0.077194371295755432;    fWeights[53]= 0.0036498984697158812;
         fPoints(54,0)= 0.077194371295755432;   fPoints(54,1)= 0.90639484399204151;     fWeights[54]= 0.0036498984697158812;
     }
+    
+    
     
     if (fOrder==17) {
         
@@ -572,6 +585,7 @@ void IntRuleTriangle::SetOrder(int order){
         fPoints(59,0)= 0.59886879088323808;    fPoints(59,1)= 0.30358518307132609;       fWeights[59]= 0.013722186996229164;
         fPoints(60,0)= 0.30358518307132609;    fPoints(60,1)= 0.59886879088323808;       fWeights[60]= 0.013722186996229164;
     }
+    
     
     if (fOrder==18) {
         
@@ -652,6 +666,7 @@ void IntRuleTriangle::SetOrder(int order){
         fPoints(71,0)= 0.93934508764373181;    fPoints(71,1)= 0.012710460572255469;    fWeights[71]= 0.0021634287304382093;
     }
     
+    
     if (fOrder==19) {
         
         fPoints.Resize(73, 2);
@@ -731,8 +746,5 @@ void IntRuleTriangle::SetOrder(int order){
         fPoints(71 ,0)= 0.92434425262078401; fPoints(71,1)= 0.065494628082937698;fWeights[71]= 0.001899964427650957;
         fPoints(72 ,0)= 0.065494628082937698; fPoints(72,1)= 0.92434425262078401;fWeights[72]= 0.001899964427650957;
     }
+    
 }
-
-
-
-

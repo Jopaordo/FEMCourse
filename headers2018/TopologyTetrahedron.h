@@ -12,21 +12,24 @@
 
 class TopologyTetrahedron
 {
-protected:
+public:
     
+    // Type definition of integration rule for tetrahedron elements
     typedef IntRuleTetrahedron LocIntRule;
     
-    const int nSides = 15;
+    // Number of sides associated with tetrahedron elements elements
+    const static int nSides = 15;
     
-    const int nCorners = 4;
+    // Number of corner nodes associated with tetrahedron elements elements
+    const static int nCorners = 4;
     
-    /// Number of nodes associated with a side
+    // Number of nodes associated with a side
     static int NSideNodes(int side);
     
-    /// local node index of a node associated with a side
+    // Local node index of a node associated with a side
     static int SideNodeIndex(int side, int node);
     
-    /// return the enumerated element type
+    // Return the enumerated element type
     static ElementType Type();
 };
 

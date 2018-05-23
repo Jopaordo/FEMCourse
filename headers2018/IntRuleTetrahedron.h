@@ -12,18 +12,21 @@
 #include <stdio.h>
 #include "TVec.h"
 #include "TMatrix.h"
+#include "IntRule.h"
 
 class IntRuleTetrahedron : public IntRule
 {
   
+    public:
     
-public:
-  
-  IntRuleTetrahedron();
-  
-  IntRuleTetrahedron(int order);
-  
-  virtual void SetOrder(int order);
+    // Default Constructor of integration rule for tetrahedron elements
+    IntRuleTetrahedron();
+    
+    // Constructor of integration rule for tetrahedron elements
+    IntRuleTetrahedron(int order);
+
+    // Method to set polynomial order of the integration rule for tetrahedro elements
+    virtual void SetOrder(int order);
     
 };
 

@@ -3,22 +3,24 @@
 //  FemSC
 //
 //  Created by Philippe Devloo on 03/04/18.
-
-#include "DataTypes.h"
+//
 
 #ifndef Shape1d_h
 #define Shape1d_h
 
-class Shape1d
+#include "DataTypes.h"
+#include "Topology1d.h"
+
+class Shape1d : public Topology1d
 {
 public:
-    /// computes the shape functions in function of the coordinate in parameter space and orders of the shape functions (size of orders is number of sides of the element topology)
-    static void Shape(VecDouble &xi, VecInt &orders, VecDouble &phi, Matrix &dphi);
+    // Computes the shape functions in function of the coordinate in parameter space and orders of the shape functions (size of orders is number of sides of the element topology)
+    static void Shape(const VecDouble &xi, VecInt &orders, VecDouble &phi, Matrix &dphi);
     
-    /// returns the number of shape functions associated with a side
+    // Returns the number of shape functions associated with a side
     static int NShapeFunctions(int side, VecInt &orders);
     
-    /// returns the total number of shape functions
+    // Returns the total number of shape functions
     static int NShapeFunctions(VecInt &orders);
 
 };

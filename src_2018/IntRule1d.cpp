@@ -7,8 +7,11 @@
 
 
 #include "IntRule.h"
-#include "IntRule1d.h"
 #include "tpanic.h"
+#include "IntRule1d.h"
+
+//Default Constructor of integration rule
+
 
 IntRule1d::IntRule1d(){
     fOrder=0;
@@ -18,16 +21,15 @@ IntRule1d::IntRule1d(){
 IntRule1d::IntRule1d(int order){
     fOrder=order;
     SetOrder(fOrder);
-
 }
+
 
 void IntRule1d::SetOrder(int order){
     fOrder=order;
-    
-    //Calculate required points number to integrate a fOrder order polynomial
+
+
     int npoints=0,resto=0;
     resto=fOrder%2;
-    
     //Odd order
     if (resto!=0) {
         npoints=(fOrder+1)/2;
@@ -37,10 +39,15 @@ void IntRule1d::SetOrder(int order){
         npoints=(fOrder+2)/2;
     }
     
-    fPoints.Resize(npoints, 1);
+    fPoints.Resize(npoints,2);
     fWeights.resize(npoints);
+    fPoints.Zero();
     
-    //Calculate integration points and weigths
+    
+    fPoints.Resize(NPoints(),2);
+    fWeights.resize(NPoints());
+  
+ 
     
     if (fOrder==0||fOrder==1) {
         
@@ -60,6 +67,7 @@ void IntRule1d::SetOrder(int order){
         
     }
     
+    
     if (fOrder==6||fOrder==7) {
         
         fPoints(0,0) = -0.86113631159405257;  fWeights[0] = 0.34785484513745385;
@@ -71,7 +79,7 @@ void IntRule1d::SetOrder(int order){
     
     if (fOrder==8||fOrder==9) {
         
-        fPoints(0,0) = -0.90617984593866396;  fWeights[0] = 0.23692688505618908;
+        fPoints(0,0)=-0.90617984593866396;  fWeights[0] = 0.23692688505618908;
         fPoints(1,0) = 0.90617984593866396;   fWeights[1] =0.23692688505618908;
         fPoints(2,0) = -0.53846931010568311;  fWeights[2] = 0.47862867049936647;
         fPoints(3,0) = 0.53846931010568311;   fWeights[3] = 0.47862867049936647;
@@ -113,6 +121,7 @@ void IntRule1d::SetOrder(int order){
         fPoints(6,0) = -0.18343464249564981; fWeights[6] = 0.36268378337836199;
         fPoints(7,0) = 0.18343464249564981; fWeights[7] = 0.36268378337836199;
         
+        
     }
     
     if (fOrder==16||fOrder==17) {
@@ -126,6 +135,7 @@ void IntRule1d::SetOrder(int order){
         fPoints(6,0) = -0.32425342340380892;  fWeights[6] = 0.31234707704000286;
         fPoints(7,0) =  0.32425342340380892;   fWeights[7] = 0.31234707704000286;
         fPoints(8,0) = 0.0;                   fWeights[8] = 0.33023935500125978;
+        
         
     }
     
@@ -144,9 +154,44 @@ void IntRule1d::SetOrder(int order){
         
     }
     
+    if (fOrder<0||fOrder>19) {
+        DebugStop();
+    }
+
+    
 }
 
-void IntRule1d::gauleg(const double x1, const double x2, TVecNum<double> &x, TVecNum<double> &w){
+void IntRule1d::gauleg(const double x1, const double x2, VecDouble &x, VecDouble &w){
+    
+    const double EPS=1.0e-14;
+    int m,j,i;
+    double z1,z,xm,xl,pp,p3,p2,p1;
+    
+    int n=x.size();
+    m=(n+1)/2;
+    xm=0.5*(x2+x1);
+    xl=0.5*(x2-x1);
+    for (i=0;i<m;i++) {
+        z=cos(3.141592654*(i+0.75)/(n+0.5));
+        do {
+            p1=1.0;
+            p2=0.0;
+            for (j=0;j<n;j++) {
+                p3=p2;
+                p2=p1;
+                p1=((2.0*j+1.0)*z*p2-j*p3)/(j+1);
+            }
+            pp=n*(z*p1-p2)/(z*z-1.0);
+            z1=z;
+            z=z1-p1/pp;
+        } while (fabs(z-z1) > EPS);
+        x[i]=xm-xl*z;
+        x[n-1-i]=xm+xl*z;
+        w[i]=2.0*xl/((1.0-z*z)*pp*pp);
+        w[n-1-i]=w[i];
+    }
+    
+    
     
 }
 
